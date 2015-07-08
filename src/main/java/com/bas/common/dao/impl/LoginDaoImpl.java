@@ -13,6 +13,13 @@ import com.bas.common.dao.LoginDao;
 import com.bas.employee.dao.entity.LoginEntity;
 
 
+/**
+ * 
+ * @author nagendra
+ * 
+ *  This is code responsible for all the logic regarding login  
+ *
+ */
 //@Repository ,@Component,@Controller
 @Repository("LoginDaoImpl")
 @Transactional
