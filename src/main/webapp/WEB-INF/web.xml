@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	
+	<welcome-file-list>
+	<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	     
+	    <!-- 
+	    classpath: means it is inside
+	    src/main/resources
+	     -->  
+ 		<context-param>
+         		<param-name>contextConfigLocation</param-name>
+         		<param-value>/WEB-INF/context/bas-att-spring-context.xml</param-value>
+         </context-param>		
+	
+	<!-- Responsible for instantiating spring root web application context container -->
+  <listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+		<!-- The listener class(com.sun.xml.ws.transport.http.servlet.WSServletContextListener) 
+		mentioned above is the web service context listener, which initializes the 
+		web service context when the application context is initialized and creates 
+		a web service delegate which is used to delegate all future web service requests 
+		and route them to appropriate end point implementation defined in the sun-jaxws.xml 
+		mentioned below sun-jaxws.xml -->
+	<!-- <listener>
+		<listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
+	</listener>
+	 -->
+	
+	<!-- The servlet definition and its mapping is used to intercept the url-pattern 
+		that should be considered as web service request. The class(com.sun.xml.ws.transport.http.servlet.WSServlet) 
+		acts as a dispatching servlet that routes the request to appropriate implementation 
+		class through the delegate received from the servlet context created by the 
+		listener as stated above. -->
+
+	<servlet>
+		<servlet-name>bas-mvc</servlet-name>
+		<servlet-class>
+         org.springframework.web.servlet.DispatcherServlet
+         </servlet-class>
+         <init-param>
+         		<param-name>contextConfigLocation</param-name>
+         		<param-value>/WEB-INF/bas-context.xml</param-value>
+         </init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<!--  <servlet-mapping> tag indicates what URLs will be handled by the which 
+	 DispatcherServlet. Here all the HTTP requests ending with .htm will be 
+	 handled by the ezloan DispatcherServlet. -->
+ 	<servlet-mapping>
+		<servlet-name>bas-mvc</servlet-name>
+		<url-pattern>/faculty/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>bas-mvc</servlet-name>
+		<url-pattern>/employee/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>bas-mvc</servlet-name>
+		<url-pattern>/admin/*</url-pattern>
+	</servlet-mapping>
+	
+	
+</web-app>	
