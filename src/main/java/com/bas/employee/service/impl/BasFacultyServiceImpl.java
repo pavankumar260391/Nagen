@@ -266,10 +266,16 @@ public class BasFacultyServiceImpl implements BasFacultyService {
 	}
 	
 	@Override
-	public String updateEmployee(FacultyAttendStatusVO dfaAttendStatusVO, String fid, String monthInfo){
-        FacultyAttendStatusEntity facultyAttendStatusEntity = new FacultyAttendStatusEntity();
-        BeanUtils.copyProperties(dfaAttendStatusVO, facultyAttendStatusEntity);
-        return basFacultyDao.updateEmployee(facultyAttendStatusEntity, fid, monthInfo);
-    }
+	public String updateEmployee(FacultyAttendStatusVO dfaAttendStatusVO, String fid, String newdate){
+		FacultyAttendStatusEntity facultyAttendStatusEntity = new FacultyAttendStatusEntity();
+		BeanUtils.copyProperties(dfaAttendStatusVO, facultyAttendStatusEntity);
+		return basFacultyDao.updateEmployee(facultyAttendStatusEntity, fid, newdate);
+	}
+
+	@Override
+	public String deleteAttendus(String employeeId, String attndDate) {		
+		return basFacultyDao.deleteAttendus(employeeId,attndDate);
+	}
+
 
 }

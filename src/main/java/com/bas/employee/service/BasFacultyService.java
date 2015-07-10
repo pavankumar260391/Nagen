@@ -69,6 +69,8 @@ public interface BasFacultyService {
 	public String updateEmployee(FacultyAttendStatusVO dfaAttendStatusVO, String fid,
 			String monthInfo);
 
+	public String deleteAttendus(String employeeId, String attndDate);
+
 //	public FaculityLeaveMasterVO findLeavesAppData(String string);
 	
 	

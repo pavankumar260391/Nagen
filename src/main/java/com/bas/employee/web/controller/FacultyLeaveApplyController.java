@@ -48,13 +48,15 @@ public class FacultyLeaveApplyController {
 	
 	
 	@ModelAttribute("leaveReasons")
-	public List<String> leaveReasons() {
-		List<String> leaveReasonList = new ArrayList<String>();
-		leaveReasonList.add("Not feeling well");
-		leaveReasonList.add("I have some urgent work at home");
-		leaveReasonList.add("I have appointment with doctor");
-		return leaveReasonList;
-	}
+    public List<String> leaveReasons() {
+        List<String> leaveReasonList = new ArrayList<String>();
+        leaveReasonList.add("(Select an option)");
+        leaveReasonList.add("Not feeling well");
+        leaveReasonList.add("I have some urgent work at home");
+        leaveReasonList.add("I have appointment with doctor");
+        leaveReasonList.add("Others");
+        return leaveReasonList;
+    }
 	
 	
 	@ModelAttribute("managerList")

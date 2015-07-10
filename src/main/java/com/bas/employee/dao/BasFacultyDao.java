@@ -44,7 +44,8 @@ public interface BasFacultyDao {
 	public List<FaculityLeaveMasterEntity> findAllRmPendingLeaveHistory();
 	public FaculityLeaveMasterEntity findLeaveAppData(String empid/*, String leaveMonth*/);
 	public void addLeaveEntry(FaculityLeaveMasterEntity faculityLeaveMasterEntity);
-	String updateEmployee(FacultyAttendStatusEntity facultyAttendStatusEntity,
+	public String updateEmployee(FacultyAttendStatusEntity facultyAttendStatusEntity,
 			String fid, String monthInfo);
+	public String deleteAttendus(String employeeId, String attndDate);
 
 }

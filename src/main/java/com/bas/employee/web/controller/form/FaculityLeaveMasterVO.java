@@ -42,7 +42,7 @@ public class FaculityLeaveMasterVO {
     private String reportingManager;
     private String ccTo;
     private String role;
-    
+    private String reason;
     
     
     
@@ -308,6 +308,14 @@ public class FaculityLeaveMasterVO {
 		this.purpose = purpose;
 	}
 
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
 	@Override
 	public String toString() {
 		return "FaculityLeaveMasterVO [empNo=" + empNo + ", name=" + name
@@ -319,7 +327,7 @@ public class FaculityLeaveMasterVO {
 				+ ", entryType=" + entryType + ", modifiedBy=" + modifiedBy
 				+ ", leaveType=" + leaveType + ", leaveCategory="
 				+ leaveCategory + ", lstatus=" + lstatus + ", purpose="
-				+ purpose + "]";
+				+ purpose + ", reason=" + reason + "]";
 	}
 
   

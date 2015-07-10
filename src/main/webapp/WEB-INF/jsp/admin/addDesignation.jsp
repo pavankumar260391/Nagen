@@ -7,6 +7,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Add Designation | BAS</title>
       <%@ include file="aimport.jsp" %>
+      <style>
+      .error {
+   color: red;
+   font-size: 12px;
+}
+      </style>
+      
+ <script>
+   $(document).ready(function(){
+	   
+	   $('#springForm').validate({ // initialize the plugin
+	        rules: {
+	        	DesignationName: {
+	                required: true,
+	                minlength:2
+	                
+	            },
+	            description: {
+	                required: true,
+	                
+	            }
+	        }
+	    });
+   });
+   </script>
 </head>
 <body>
 
@@ -47,9 +72,9 @@
 										<tr  style="color: #000000; font-weight: bold;">
 								<td>Designation Name <span style="color: red;font-weight: bold;font-size: 16px;">*</span></td>
 								<td>
-								<input  type="text" id="DesignationName" name="DesignationName"
+								<input  type="text" id="DesignationName" class="error" name="DesignationName"
 										size="10" style="height: 15px"></input>
-										  
+								<p id="designationError" style="display: none;">Please Enter the Designation</p>		  
 										</td>
 							</tr>
 							<tr  style="color: #000000; font-weight: bold;">
@@ -63,7 +88,7 @@
 								<td colspan="2">&nbsp;</td>
 							</tr>
 							 <tr bgcolor="white" style="color: #000000; font-weight: bold;">
-								<td><input type="submit" class="btn btn-info" size="30" value="Add Designation" ></input></td>
+								<td><input type="submit" id="addDesignation" class="btn btn-info" size="30" value="Add Designation" ></input></td>
 							</tr>
 						</table>
 					</fieldset>
@@ -124,11 +149,11 @@
     <!--/Modal Body-->
 </div>
 <!--  /Login form -->
-
+<%-- 
 <script src="${pageContext.request.contextPath}/js/vendor/jquery-1.9.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/vendor/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/main.js"></script>
-
+ --%>
 </body>
 
 

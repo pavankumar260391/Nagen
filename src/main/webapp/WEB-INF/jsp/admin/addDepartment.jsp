@@ -13,6 +13,34 @@
     $( "#datepicker" ).datepicker();
   });
   </script>
+  
+   <style>
+      .error {
+       
+   color: red;
+   font-size: 12px;
+}
+      </style>
+      
+ <script>
+   $(document).ready(function(){
+	   
+	   $('#springForm').validate({ // initialize the plugin
+	        rules: {
+	        	
+	        	departmentName:{
+	                required: true,
+	                 
+	                
+	            },
+	            departmentShortName: {
+	                required: true
+	                
+	            }
+	        }
+	    });
+   });
+   </script>
 </head>
 <body>
 
@@ -46,7 +74,54 @@
 							<b><font color="darkblue">Add New Department</font></b>
 						</legend>
 						<br />
-						<table width="630" border="0" align="left"
+						<table width="630" border="0" align="left">
+							
+							<!-- <tr bgcolor="#66CCFF" style="color: #000000; font-weight: bold;">
+								<td>Designation Id</td>
+								<td><input  type="text" id="designationId" name="designationId"
+										size="10" style="height: 15px"></input>
+										  
+										</td> -->
+										<tr  style="color: #000000; font-weight: bold;">
+								<td>Department Name <span style="color: red;font-weight: bold;font-size: 16px;">*</span></td>
+								<td>
+								<input  type="text" id="departmentName" class="error" name="departmentName"
+										size="10"  style="float:left;margin-right:10px;height: 15px"></input>
+								<p id="designationError" style="display: none;">Please Enter the Designation</p>		  
+										</td>
+							</tr>
+							
+							<tr  style="color: #000000; font-weight: bold;">
+								<td>Short Name of Department <span style="color: red;font-weight: bold;font-size: 16px;">*</span></td>
+								<td>
+								<input  type="text" id="departmentShortName"  name="departmentShortName"
+										size="10" style="float:left;margin-right:10px;height: 15px"></input>
+								<p id="designationError" style="display: none;">Please Enter the Designation</p>		  
+										</td>
+							</tr>
+							<!-- <tr  style="color: #000000; font-weight: bold;">
+								<td>Short Name of Department</td>
+								<td>
+								<textarea rows="" cols="" name="departmentShortName" id="departmentShortName"></textarea>
+										</td>
+										 
+							</tr> -->
+							<tr  style="color: #000000; font-weight: bold;">
+								<td>Description</td>
+								<td>
+								<textarea rows="" cols="" name="description" id="description"></textarea>
+										</td>
+										 
+							</tr>
+							 
+							 <tr bgcolor="white" style="color: #000000; font-weight: bold;">
+								<td colspan="2">&nbsp;</td>
+							</tr>
+							 <tr bgcolor="white" style="color: #000000; font-weight: bold;">
+								<td><input type="submit" id="AddDepartment" class="btn btn-info" size="30" value="Add Department" ></input></td>
+							</tr>
+						</table>
+						<%-- <table width="630" border="0" align="left">
 							style="background-image: url(${pageContext.request.contextPath}/images/nhbg.jpg);">
 							
 							<tr bgcolor="#66CCFF" style="color: #000000; font-weight: bold;">
@@ -82,7 +157,7 @@
 								<td><input type="submit" class="btn btn-info" size="30" value="AddDepartment" ></input></td>
 							</tr>
 							
-						</table>
+						</table> --%>
 					</fieldset>
 				</ff:form>
 </section>
@@ -142,9 +217,7 @@
 </div>
 <!--  /Login form -->
 
-<script src="${pageContext.request.contextPath}/js/vendor/jquery-1.9.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/vendor/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/main.js"></script>
+  
 
 </body>
 

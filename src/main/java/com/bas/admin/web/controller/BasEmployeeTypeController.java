@@ -1,5 +1,8 @@
 package com.bas.admin.web.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bas.admin.service.EmployeeTypeService;
 import com.bas.admin.web.controller.form.EmployeeTypeForm;
-import com.bas.admin.web.controller.form.LeaveReasonForm;
 import com.bas.common.constant.NavigationConstant;
 import com.bas.employee.service.BasFacultyService;
 import com.bas.employee.utility.MonthUtility;
@@ -63,39 +65,75 @@ public class BasEmployeeTypeController {
 		return 	employeeTypeService.searchEmployee(request.getParameter("term"));
 	}
 	
-	@RequestMapping(value="/retreiveEmployeeForAdmin/{employeeName}",method=RequestMethod.POST)
-	public @ResponseBody List<FacultyAttendStatusVO> showAttendStatus(@PathVariable(value="employeeName") String employeeName,HttpSession session,
+	@RequestMapping(value="/retreiveEmployeeForAdmin",method=RequestMethod.POST)
+	public @ResponseBody List<FacultyAttendStatusVO> showAttendStatus(@RequestParam(value="requiredData") String employeeName,HttpSession session,
 			Model model)
 	{	
 		MonthUtility monthUtility = new MonthUtility();
 		String[] names = employeeName.split(" ");
 		String employeeId = employeeTypeService.getEmployeeId(names[0], names[1]);
-		int inTimeStatus = employeeTypeService.getEmployeeLate(monthUtility.getDate(), employeeId, "intimestatus");
-		int outTimeStatus = employeeTypeService.getEmployeeLate(monthUtility.getDate(), employeeId, "outtimestatus");
+		/*int inTimeStatus = employeeTypeService.getEmployeeLate(monthUtility.getDate(), employeeId, "intimestatus");
+		int outTimeStatus = employeeTypeService.getEmployeeLate(monthUtility.getDate(), employeeId, "outtimestatus");*/
 		LoginForm loginForm=(LoginForm)session.getAttribute(NavigationConstant.USER_SESSION_DATA);		
 		List<FacultyAttendStatusVO> facultyAttendStatusVOlist=basFacultyService.findAttendStatus(employeeId,monthUtility.getDate());		
 		//System.out.println(facultyAttendStatusVOlist.get(0));
 		return facultyAttendStatusVOlist;
 	}
+
 	
-	@RequestMapping(value="/retreiveEmployeeForAdminMonth/{monthVal}",method=RequestMethod.POST)
-	public @ResponseBody List<FacultyAttendStatusVO> showAttendStatus1(@PathVariable(value="monthVal") String monthVal,HttpSession session)
+	@RequestMapping(value="/retreiveEmployeeForAdminMonth",method=RequestMethod.POST)
+	public @ResponseBody List<FacultyAttendStatusVO> showAttendStatus1(@RequestParam(value="requiredData") String monthVal,HttpSession session)
 	{	
 		LoginForm loginForm=(LoginForm)session.getAttribute(NavigationConstant.USER_SESSION_DATA);		
 		List<FacultyAttendStatusVO> facultyAttendStatusVOlist=basFacultyService.findAttendStatus("801",Integer.parseInt(monthVal));		
 	/*	System.out.println(facultyAttendStatusVOlist.get(0));*/
 		return facultyAttendStatusVOlist;
 	}
+
 	
 	@RequestMapping(value = "/updateEmployee", method = RequestMethod.POST)
 	public @ResponseBody String editEmployeeType(@ModelAttribute(value="EmptyfacultyAttendStatusVO") FacultyAttendStatusVO facultyAttendStatusVO, 
-			HttpServletRequest request, Model model) {
-		
-		System.out.println(facultyAttendStatusVO);
-		//String message = basFacultyService.updateEmployee(facultyAttendStatusVO, "801");
-		return "Hello";
+			HttpServletRequest request,@RequestParam(value="additionalInfo") String monthInfo, Model model) {
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		DateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = null;
+		String newdate="";
+		try {
+			date = format.parse(monthInfo);
+			newdate = newFormat.format(date);			
+		} catch (ParseException e) {		
+			e.printStackTrace();
+		}						
+		/*System.out.println(facultyAttendStatusVO);*/
+		/*String abc = basFacultyService.insertAttendus(basFacultyService.insertData());
+		System.out.println(abc);*/
+		String message = basFacultyService.updateEmployee(facultyAttendStatusVO, "801",newdate);
+		return message;		
 	}
 	
+	@RequestMapping(value = "/deleteAttendus", method = RequestMethod.GET)
+	public @ResponseBody String deleteAttendus(HttpServletRequest request,@RequestParam(value="employeeName") String employeeName,
+			 @RequestParam(value="attndDate") String attndDate) {		
+		String[] names = employeeName.split(" ");
+		String employeeId = employeeTypeService.getEmployeeId(names[0], names[1]);
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		DateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = null;
+		String newdate="";
+		try {
+			date = format.parse(attndDate);
+			newdate = newFormat.format(date);			
+		} catch (ParseException e) {		
+			e.printStackTrace();
+		}		
+		System.out.println(employeeId);
+		System.out.println(newdate);
+		String message = basFacultyService.deleteAttendus(employeeId,newdate);
+		
+		return message;
+	}
+
+
 	/*@RequestMapping(value = "/adminUpdateAttendance1", method = RequestMethod.POST)
 	public String showAttendance(HttpServletRequest request, Model model) {
 		MonthUtility monthUtility = new MonthUtility();

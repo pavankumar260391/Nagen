@@ -43,14 +43,23 @@ public class BasFacultyDaoImpl extends JdbcDaoSupport implements BasFacultyDao {
 	}
 	
 	@Override
-    public String updateEmployee(FacultyAttendStatusEntity facultyAttendStatusEntity, String fid, String monthInfo){
-        String sql = "UPDATE faculity_att_tab SET intime=?,outtime=?,intimestatus=?,outtimestatus=?,detail=?,present=? WHERE fid=?";
-        Object[] object = new Object[] {facultyAttendStatusEntity.getIntime(),facultyAttendStatusEntity.getOuttime(),
-            facultyAttendStatusEntity.getIntimestatus(),facultyAttendStatusEntity.getOuttimestatus(),
-            facultyAttendStatusEntity.getDetail(),facultyAttendStatusEntity.getPresent(),fid};
-        super.getJdbcTemplate().update(sql, object);
-        return "Employee Updated Success";
-    }
+	public String updateEmployee(FacultyAttendStatusEntity facultyAttendStatusEntity, String fid, String newdate){
+		String sql = "UPDATE faculity_att_tab SET intime=?,outtime=?,intimestatus=?,outtimestatus=?,detail=?,present=? WHERE fid=? and Date(cdate)=?";
+		Object[] object = new Object[] {facultyAttendStatusEntity.getIntime(),facultyAttendStatusEntity.getOuttime(),
+			facultyAttendStatusEntity.getIntimestatus(),facultyAttendStatusEntity.getOuttimestatus(),
+			facultyAttendStatusEntity.getDetail(),facultyAttendStatusEntity.getPresent(),fid,newdate};
+		super.getJdbcTemplate().update(sql, object);
+		return "Attendus Updated Success";
+	}
+	
+	@Override
+	public String deleteAttendus(String employeeId, String attndDate){
+		String sql = "Delete from faculity_att_tab where fid=? and Date(cdate)=?";
+		super.getJdbcTemplate().update(sql,new Object[]{employeeId,attndDate});
+		return "Attendus Deleted Successfuly";
+	}
+
+
 	//put all the queries in the sql file
 	@Override
 	public String persistFaculty(FacultyEntity facultyEntity) {
@@ -270,24 +279,26 @@ public class BasFacultyDaoImpl extends JdbcDaoSupport implements BasFacultyDao {
 	}
 
 	@Override
-	public void addLeaveEntry(
-			FaculityLeaveMasterEntity faculityLeaveMasterEntity) {
-		System.out.println("before insert query" + faculityLeaveMasterEntity.getLeaveFrom());
-		System.out.println("before insert query" + faculityLeaveMasterEntity.getMobile());
-
-		String sql = "insert into leave_entry_tbl values(?,?,?,?,?,?,?,?)";
-		Object[] data = new Object[] { 
-				faculityLeaveMasterEntity.getLeaveFrom(),
-				faculityLeaveMasterEntity.getLeaveTo(),
-				faculityLeaveMasterEntity.getTotalDays(),
-				faculityLeaveMasterEntity.getLeaveType(),
-				faculityLeaveMasterEntity.getPurpose(),
-				faculityLeaveMasterEntity.getLeaveCategory(),
-				faculityLeaveMasterEntity.getReportingManager(),
-				faculityLeaveMasterEntity.getCcTo()};
-		// firing the query
-		super.getJdbcTemplate().update(sql, data);
-	}
+    public void addLeaveEntry(
+            FaculityLeaveMasterEntity faculityLeaveMasterEntity) {
+        // TODO Auto-generated method stub
+        System.out.println("before insert query" + faculityLeaveMasterEntity.getLeaveFrom());
+        System.out.println("before insert query" + faculityLeaveMasterEntity.getMobile());
+        String sql = "insert into leave_entry_tbl values(?,?,?,?,?,?,?,?,?,?)";
+        Object[] data = new Object[] { 
+                faculityLeaveMasterEntity.getLeaveFrom(),
+                faculityLeaveMasterEntity.getLeaveTo(),
+                faculityLeaveMasterEntity.getTotalDays(),
+                faculityLeaveMasterEntity.getLeaveType(),
+                faculityLeaveMasterEntity.getDescription(),
+                faculityLeaveMasterEntity.getPurpose(),
+                faculityLeaveMasterEntity.getReason(),
+                faculityLeaveMasterEntity.getLeaveCategory(),
+                faculityLeaveMasterEntity.getReportingManager(),
+                faculityLeaveMasterEntity.getCcTo()};
+        // firing the query
+        super.getJdbcTemplate().update(sql, data);
+    }
 
 	@Override
 	public byte[] findPhotoByEmpName(String name) {

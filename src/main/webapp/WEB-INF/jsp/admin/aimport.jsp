@@ -2,6 +2,7 @@
     <meta name="viewport" content="width=device-width">
    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"	></script>
+   <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/vendor/bootstrap.min.js"></script>        
   
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
@@ -12,7 +13,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sl-slide.css">
      <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">   
     <script src="${pageContext.request.contextPath}/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-   	
+   	<script>
+			contextPath= "${pageContext.request.contextPath}";
+	</script>
+	
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="${pageContext.request.contextPath}/images/ico/apple-touch-icon-144-precomposed.png">

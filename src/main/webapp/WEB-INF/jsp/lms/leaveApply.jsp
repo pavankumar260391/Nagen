@@ -65,6 +65,8 @@
 						});
 
 						$("#description").hide();
+						$("#reason").hide();
+
 						$("#lvmeeting").hide();
 
 						$
@@ -80,7 +82,7 @@
 									} //end of result
 								});
 
-						$("#leaveType1")
+						/* $("#leaveType1")
 								.change(
 										function() {
 											if (document
@@ -92,7 +94,7 @@
 
 											}
 
-										});
+										}); */
 
 					});
 </script>
@@ -109,6 +111,32 @@
 </script>
 
 <script type="text/javascript">
+	function checkType() {
+		$("#description").hide();
+		if (document.getElementById("leaveType1").value == "Others") {
+			$("#description").show();
+
+		} else {
+			$("#description").hide();
+
+		}
+	}
+</script>
+
+<script type="text/javascript">
+	function checkReason() {
+		$("#reason").hide();
+		if (document.getElementById("purpose").value == "Others") {
+			$("#reason").show();
+
+		} else {
+			$("#reason").hide();
+
+		}
+	}
+</script>
+
+<script type="text/javascript">
 	function validate() {
 
 		var form_valid = (document.getElementById('totalDays').value == '0');
@@ -120,6 +148,13 @@
 		if (document.getElementById('description').value == ''
 				&& document.getElementById('leaveType1').value == 'Others') {
 			alert("please provide a leave description");
+			return false;
+
+		}
+
+		if (document.getElementById('reason').value == ''
+				&& document.getElementById('purpose').value == 'Others') {
+			alert("please provide a leave reason");
 			return false;
 
 		}
@@ -213,8 +248,48 @@
 					}
 
 				});
+
 	}
 </script>
+
+<script type="text/javascript">
+	function ValidateMobNumber(txtMobId) {
+
+		$('#mobile').keypress(function(event) {
+
+			if (event.which != 8 && isNaN(String.fromCharCode(event.which))) {
+				event.preventDefault(); //stop character from entering input
+				document.getElementById('mobileError').innerHTML = " Invalid";
+			} else {
+				document.getElementById('mobileValid').innerHTML = " Valid";
+
+			}
+
+		});
+	}
+</script>
+
+<style>
+.error {
+	color: red;
+	font-size: 12px;
+}
+</style>
+
+<!-- <script>
+	$(document).ready(function() {
+
+		$('#leaveForm').validate({ // initialize the plugin
+			rules : {
+				mobile : {
+					phoneUS : true,
+					required : true,
+
+				}
+			}
+		});
+	});
+</script> -->
 
 </head>
 
@@ -227,16 +302,12 @@
 	<section class="title">
 		<div class="container">
 			<div class="row-fluid">
-				<div class="span6">
-					<h3>Leave Apply</h3>
-				</div>
-				<div class="span6">
-					<ul class="breadcrumb pull-right">
-						<li><a href="index.html">Home</a> <span class="divider">/</span></li>
-						<li><a href="#">Leave Management</a> <span class="divider">/</span></li>
-						<li class="active">Leave Apply</li>
-					</ul>
-				</div>
+				  <div class="span6">
+                    <h4>Leave Apply</h4>
+                </div>
+                <div class="span6">
+                 
+                </div>
 			</div>
 		</div>
 	</section>
@@ -244,10 +315,10 @@
 
 	<section id="portfolio" class="container main">
 
-		<div class="alert alert-info fade in" id="myAlert">
+		<%-- <div class="alert alert-info fade in" id="myAlert">
 			<a href="#" class="close" data-dismiss="alert">&times;</a> <strong></strong>
 			${successMessage}
-		</div>
+		</div> --%>
 
 		<ff:form
 			action="${pageContext.request.contextPath}/employee/leaveEntry"
@@ -285,7 +356,7 @@
 				</tr>
 			</table>
 
-			<table border="0" style="width: 100%" class="table">
+			<table border="0" style="width: 100%;" class="table" >
 
 				<tr height="25px">
 					<td colspan="1" style="width: 30%; align: left;"><b>Leave
@@ -304,23 +375,35 @@
 				<tr height="25px">
 					<td colspan="1" style="width: 10%; align: left;"><b>Leave
 							Type </b><font color="red">*</font> <ff:select path="leaveType"
-							name="leaveType" id="leaveType1" onchange="checkType();"
+							name="leaveType" id="leaveType1"
+							onchange="javascript:checkType();"
 							style="background-color:#FFFFFF">
+							<option>(Select an option)</option>
 							<option>CL</option>
 							<option>EL</option>
 							<option>OD</option>
 							<option>Compensatory Leave</option>
 							<option>Others</option>
-						</ff:select></td>
-					<td colspan="1" style="width: 10%; align: center;"><ff:input
-							path="description" style="background-color:white;"
-							placeholder="Description" size="65" /></td>
+						</ff:select> <ff:input path="description" id="description"
+							style="background-color:white;" placeholder="Description"
+							size="65" /></td>
 
-					<td colspan="1" style="width: 10%; align: right;"><b>Purpose
+					<td colspan="1" style="width: 10%; align: center;"><b>Purpose
 					</b><font color="red">*</font> <ff:select path="purpose" name="purpose"
-							style="background-color:white">
+							style="background-color:white" id="purpose"
+							onchange="javascript:checkReason();">
 							<ff:options items="${leaveReasons}" />
-						</ff:select></td>
+						</ff:select>
+						
+						 <ff:input path="reason" id="reason"
+							style="background-color:white;margin-left:60px;" placeholder="Description"
+							size="65"  /></td>
+
+					<td>Mobile: <ff:input type="text" path="mobile" size="10"
+							id="mobile" maxlength="10" style="height: 15px"
+							onkeydown="return ValidateMobNumber('mobile')" /><span
+						id="mobileError" style="color: red"></span><span id="mobileValid"
+						style="color: green"></span>
 				</tr>
 
 				<tr height="25px">
@@ -338,13 +421,10 @@
 							id="sh" path="leaveMeeting" value="SecondHalf" />Second Half</td>
 
 
-					<%-- <td>Mobile: <ff:input type="number" path="mobile" size="10"
-							id="mobile" maxlength="10" style="height: 15px"
-							<%-- pattern="\d{3}[\-]\d{3}[\-]\d{4}" required
-							onkeyup="check(); return false;"  /><input type="hidden"
-						value="${message}" id="message"></td> --%>
-
-
+					<%-- <td>Mobile: <ff:input data-validation="number" type="text"
+							path="mobile" size="10" id="mobile" maxlength="10"
+							style="height: 15px"
+							onkeydown="return ValidateMobNumber('mobile')" /> --%>
 				</tr>
 
 				<tr height="25px">
@@ -431,7 +511,6 @@
 		<!--/Modal Body-->
 	</div>
 	<!--  /Login form -->
-
 	<script
 		src="${pageContext.request.contextPath}/js/vendor/jquery-1.9.1.min.js"></script>
 	<script
