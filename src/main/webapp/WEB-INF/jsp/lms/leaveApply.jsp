@@ -299,18 +299,6 @@
 	<%@include file="eheader.jsp"%>
 	<!-- /header -->
 
-	<section class="title">
-		<div class="container">
-			<div class="row-fluid">
-				  <div class="span6">
-                    <h4>Leave Apply</h4>
-                </div>
-                <div class="span6">
-                 
-                </div>
-			</div>
-		</div>
-	</section>
 	<!-- / .title -->
 
 	<section id="portfolio" class="container main">

@@ -1,14 +1,11 @@
 package com.bas.employee.web.controller;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +21,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.bas.admin.web.controller.form.HolidayEntryForm;
 import com.bas.common.constant.NavigationConstant;
+import com.bas.common.constant.PageTitleContant;
 import com.bas.employee.service.BasFacultyService;
 import com.bas.employee.web.controller.form.FaculityLeaveMasterVO;
 import com.bas.employee.web.controller.form.LoginForm;
-import com.bas.employee.web.controller.form.ManualAttendanceVO;
 
 /**
  * @author kushal
@@ -144,6 +140,7 @@ public class FacultyLeaveApplyController {
 	//	faculityLeaveMasterVO=basFacultyService.findLeaveAppData(loginForm.getEid(),leaveMonth);
 		 faculityLeaveMasterVO=basFacultyService.findLeaveAppData("555"/*,leaveMonth*/);
 		 model.addAttribute("faculityLeaveMasterVO", faculityLeaveMasterVO);
+		 model.addAttribute(PageTitleContant.PAGE_TITLE, PageTitleContant.LEAVE_APPLE_PAGE);
 		return NavigationConstant.LMS_PREFIX_PAGE
 				+ NavigationConstant.LEAVE_APPLY_PAGE;
 

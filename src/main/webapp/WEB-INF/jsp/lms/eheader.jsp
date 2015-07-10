@@ -47,4 +47,17 @@
                 </div><!--/.nav-collapse -->
             </div>
         </div>
+        
+        <section class="title" >
+		<div class="container">
+			<div class="row-fluid">
+				  <div class="span6">
+                    <h4>${pageTitle}</h4>
+                </div>
+                <div class="span6">
+                 
+                </div>
+			</div>
+		</div>
+	</section>
     </header>
